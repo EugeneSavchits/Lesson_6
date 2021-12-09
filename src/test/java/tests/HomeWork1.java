@@ -12,6 +12,7 @@ public class HomeWork1 {
 
     static String URL = "https://kermi-fko.ru/raschety/Calc-Rehau-Solelec.aspx";
     static String URL2 = "https://masterskayapola.ru/kalkulyator/laminata.html";
+    static String URL3 = "https://calc.by/building-calculators/laminate.html";
 
     @Test
     public void homework_test1 () throws InterruptedException {
@@ -82,45 +83,31 @@ public class HomeWork1 {
 
         //2. Ввести длинну помещения
         WebElement lenght = driver.findElement(By.name("calc_roomwidth"));
-        lenght.clear();
-        lenght.sendKeys(Keys.BACK_SPACE);
-        lenght.sendKeys(Keys.BACK_SPACE);
-        lenght.sendKeys(Keys.BACK_SPACE);
-        lenght.sendKeys(Keys.BACK_SPACE);
+        lenght.sendKeys(Keys.CONTROL + "a");
         lenght.sendKeys(Keys.BACK_SPACE);
         lenght.sendKeys(lenghtValue);
 
         //3.Ввести ширину помещения
         WebElement width = driver.findElement(By.name("calc_roomheight"));
-        width.clear();
-        width.sendKeys(Keys.BACK_SPACE);
-        width.sendKeys(Keys.BACK_SPACE);
-        width.sendKeys(Keys.BACK_SPACE);
-        width.sendKeys(Keys.BACK_SPACE);
+        width.sendKeys(Keys.CONTROL + "a");
         width.sendKeys(Keys.BACK_SPACE);
         width.sendKeys(widthValue);
 
         //4.Ввести длину панели ламината
         WebElement lenghtPanel = driver.findElement(By.name("calc_lamwidth"));
-        lenghtPanel.clear();
-        lenghtPanel.sendKeys(Keys.BACK_SPACE);
-        lenghtPanel.sendKeys(Keys.BACK_SPACE);
-        lenghtPanel.sendKeys(Keys.BACK_SPACE);
+        lenghtPanel.sendKeys(Keys.CONTROL + "a");
         lenghtPanel.sendKeys(Keys.BACK_SPACE);
         lenghtPanel.sendKeys(lenghtPanelValue);
 
         //5.Ввести ширину панели ламината
         WebElement widthPanel = driver.findElement(By.name("calc_lamheight"));
-        widthPanel.clear();
-        widthPanel.sendKeys(Keys.BACK_SPACE);
-        widthPanel.sendKeys(Keys.BACK_SPACE);
+        widthPanel.sendKeys(Keys.CONTROL + "a");
         widthPanel.sendKeys(Keys.BACK_SPACE);
         widthPanel.sendKeys(widthPanelValue);
 
         //6. Ввести колличество панелей в упаковке
         WebElement panelsPackage = driver.findElement(By.name("calc_inpack"));
-        panelsPackage.clear();
-        panelsPackage.sendKeys(Keys.BACK_SPACE);
+       panelsPackage.sendKeys(Keys.CONTROL + "a");
         panelsPackage.sendKeys(Keys.BACK_SPACE);
         panelsPackage.sendKeys(panelsPackageValue);
 
@@ -140,10 +127,45 @@ public class HomeWork1 {
 
         Thread.sleep(5000);
         driver.quit();
+    }
+    @Test
+    public void homework_test3 () throws InterruptedException {
+        String lenghtValue = "500";
+        String widthValue = "400";
+        String lenghtPanelValue = "2000";
+        String widthPanelValue = "200";
 
+        String expectedNumberPanels = "53";
+        String expectedNumberPackages = "7";
 
+        System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
+        //1.Открыть браузер и перейти на тестируемую страницу
+        ChromeDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get(URL3);
 
+        //2. Ввести длинну комнаты
+        Thread.sleep(5000);
+        WebElement lenght = driver.findElement(By.id("ln_room_id"));
+        lenght.clear();
+        lenght.sendKeys(lenghtValue);
 
+        //3. Ввести ширину комнаты
+        WebElement width = driver.findElement(By.id("wd_room_id"));
+        width.clear();
+        width.sendKeys(widthValue);
 
+        //4.Ввести длину ламината
+        WebElement lenghtPanel = driver.findElement(By.id("ln_lam_id"));
+        lenghtPanel.clear();
+        lenghtPanel.sendKeys(lenghtPanelValue);
+
+        //5. Ввести ширину ламината
+        WebElement widthPanel = driver.findElement(By.id("wd_lam_id"));
+        widthPanel.clear();
+        widthPanel.sendKeys(widthPanelValue);
+
+        Thread.sleep(5000);
+        driver.quit();
     }
 }
