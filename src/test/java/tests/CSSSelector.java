@@ -45,8 +45,7 @@ public class CSSSelector {
 
 
 
-        li:first-child
-        li:last-child
+
 
 
 
