@@ -60,7 +60,7 @@ public class HomeWork1 {
         Assert.assertEquals(actualSpecificPower, expectedSpecificPower, "Удельные мощности различны");
 
 
-        Thread.sleep(5000);
+        Thread.sleep(2000);
         driver.quit();
     }
     @Test
@@ -125,7 +125,7 @@ public class HomeWork1 {
         Assert.assertEquals(actualNumberPanels, expectedNumberPanels, "колличество панелей различно");
         Assert.assertEquals(actualNumberPackages, expectedNumberPackages, "колличество упаковок различно");
 
-        Thread.sleep(5000);
+        Thread.sleep(2000);
         driver.quit();
     }
     @Test
@@ -145,7 +145,7 @@ public class HomeWork1 {
         driver.get(URL3);
 
         //2. Ввести длинну комнаты
-        Thread.sleep(5000);
+        Thread.sleep(4000);
         WebElement lenght = driver.findElement(By.id("ln_room_id"));
         lenght.clear();
         lenght.sendKeys(lenghtValue);
@@ -165,7 +165,28 @@ public class HomeWork1 {
         widthPanel.clear();
         widthPanel.sendKeys(widthPanelValue);
 
-        Thread.sleep(5000);
+        //6. Выбрать направление укладки по ширине комнаты
+        WebElement layingDerection = driver.findElement(By.id("direction-laminate-id1"));
+        layingDerection.sendKeys(Keys.PAGE_DOWN);
+        layingDerection.click();
+
+
+        //7. Нажать рассчитать
+        WebElement calculate = driver.findElement(By.className("calc-btn-div"));
+        calculate.click();
+        Thread.sleep(2000);
+
+
+        //8. Получение актуальных результатов
+        String actualNumberPanels = driver.findElement(By.cssSelector("span[style='padding:5px 0;font-size:22px; color:#C80303; font-weight:bold;']")).getText();
+        String actualNumberPackages = driver.findElement(By.cssSelector("span[style='padding:5px 0;font-size:18px; color:#0E8C19; font-weight:bold;']")).getText();
+
+
+        //9. Сравнение актуальных и ожидаемых результатов
+        Assert.assertEquals(actualNumberPanels, expectedNumberPanels, "неверно колличество досок");
+        Assert.assertEquals(actualNumberPackages, expectedNumberPackages, "неверно колличество упаковок");
+
+        Thread.sleep(2000);
         driver.quit();
     }
 }
