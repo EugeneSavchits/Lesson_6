@@ -55,12 +55,11 @@ public class HomeWork1 {
         String actualSpecificPower = driver.findElement(By.id("spec_floor_cable_power")).getAttribute("value");
 
         //8. Сравнение актуальных и ожидаемых результато
-
         Assert.assertEquals(actualPower, expectedPower, "Мощности различны");
         Assert.assertEquals(actualSpecificPower, expectedSpecificPower, "Удельные мощности различны");
 
-
         Thread.sleep(2000);
+
         driver.quit();
     }
     @Test
@@ -107,7 +106,7 @@ public class HomeWork1 {
 
         //6. Ввести колличество панелей в упаковке
         WebElement panelsPackage = driver.findElement(By.name("calc_inpack"));
-       panelsPackage.sendKeys(Keys.CONTROL + "a");
+        panelsPackage.sendKeys(Keys.CONTROL + "a");
         panelsPackage.sendKeys(Keys.BACK_SPACE);
         panelsPackage.sendKeys(panelsPackageValue);
 
@@ -126,6 +125,7 @@ public class HomeWork1 {
         Assert.assertEquals(actualNumberPackages, expectedNumberPackages, "колличество упаковок различно");
 
         Thread.sleep(2000);
+
         driver.quit();
     }
     @Test
@@ -187,6 +187,7 @@ public class HomeWork1 {
         Assert.assertEquals(actualNumberPackages, expectedNumberPackages, "неверно колличество упаковок");
 
         Thread.sleep(2000);
+
         driver.quit();
     }
 }
