@@ -1,6 +1,7 @@
 package pages;
 
 import baseEntities.BasePage;
+import core.ReadProperties;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -39,6 +40,8 @@ public class LoginPage extends BasePage {
 
     //Реализация базовых методов
     public void login (String username, String password) {
-
+        getEmailField().sendKeys(ReadProperties.getUsername());
+        getPasswordField().sendKeys(ReadProperties.getPassword());
+        getLoginButton().click();
     }
 }
