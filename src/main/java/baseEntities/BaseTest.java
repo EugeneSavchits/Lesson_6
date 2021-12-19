@@ -21,7 +21,7 @@ public class BaseTest {
 
     @BeforeMethod
     public void setUp (){
-        switch (ReadProperties.getBrowserType().toLowerCase(Locale.ROOT)) {
+        switch (ReadProperties.getBrowserType().toLowerCase()) {
             case "chrome":
                 WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
 
