@@ -6,7 +6,7 @@ public class ParamTest {
 
     @Parameters({"login-value", "psw-value"})
     @Test
-    public void paranTest (@Optional("Default_login") String login, @Optional("1111111") String psw) {
+    public void paramTest (@Optional("Default_login") String login, @Optional("1111111") String psw) {
         System.out.println("Login is: "+login);
         System.out.println("Password is:"+psw);
     }
