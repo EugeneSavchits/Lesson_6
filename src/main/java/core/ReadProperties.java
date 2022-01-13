@@ -16,10 +16,27 @@ public class ReadProperties {
         }
     }
 
-    public static String getUrl() {return properties.getProperty("url");}
-    public static String getBrowserType() {return properties.getProperty("browserType");}
-    public static boolean getHeadless() {return properties.getProperty("headless").equalsIgnoreCase("true");}
-    public static String getUsername() {return properties.getProperty("username");}
-    public static String getPassword() {return properties.getProperty("password");}
+    public static String getUrl() {
+        return properties.getProperty("url");
+    }
 
+    public static String getBrowserName() {
+        return properties.getProperty("browser");
+    }
+
+    public static String getUsername() {
+        return properties.getProperty("username");
+    }
+
+    public static String getPassword() {
+        return properties.getProperty("password");
+    }
+
+    public static boolean isHeadless() {
+        return properties.getProperty("headless").equalsIgnoreCase("true");
+    }
+
+    public static int getTimeOut() {
+        return Integer.parseInt(properties.getProperty("timeout"));
+    }
 }
