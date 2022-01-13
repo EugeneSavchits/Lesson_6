@@ -14,9 +14,9 @@ public class SmokeTest extends BaseTest {
     public void loginTest() {
         LoginPage loginPage = new LoginPage(driver);
 
-        loginPage.getEmailField().sendKeys(ReadProperties.getUsername());
-        loginPage.getPasswordField().sendKeys(ReadProperties.getPassword());
-        loginPage.getLoginButton().click();
+        loginPage.emailField.sendKeys(ReadProperties.getUsername());
+        loginPage.passwordField.sendKeys(ReadProperties.getPassword());
+        loginPage.loginButton.click();
 
         DashboardPage dashboardPage = new DashboardPage(driver, true);
 
@@ -28,9 +28,9 @@ public class SmokeTest extends BaseTest {
     public void flakyLoginTest() {
         LoginPage loginPage = new LoginPage(driver);
 
-        loginPage.getEmailField().sendKeys(ReadProperties.getUsername());
-        loginPage.getPasswordField().sendKeys(ReadProperties.getPassword());
-        loginPage.getLoginButton().click();
+        loginPage.emailField.sendKeys(ReadProperties.getUsername());
+        loginPage.passwordField.sendKeys(ReadProperties.getPassword());
+        loginPage.loginButton.click();
 
         DashboardPage dashboardPage = new DashboardPage(driver, true);
 

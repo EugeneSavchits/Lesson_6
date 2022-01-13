@@ -5,6 +5,7 @@ import Utils.Waits;
 import core.ReadProperties;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
 
 public abstract class BasePage {
     protected WebDriver driver;
@@ -19,6 +20,8 @@ public abstract class BasePage {
         this.driver = driver;
         this.waits = new Waits(driver);
         this.BASE_URL = ReadProperties.getUrl();
+
+        PageFactory.initElements(driver, this);
 
         if (openPageByUrl) {
             openPage();
