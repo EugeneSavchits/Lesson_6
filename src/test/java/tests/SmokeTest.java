@@ -3,9 +3,12 @@ package tests;
 import Utils.Retry;
 import baseEntities.BaseTest;
 import core.ReadProperties;
+import models.Project;
 import models.User;
+import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.AddProjectPage;
 import pages.DashboardPage;
 import pages.LoginPage;
 
@@ -37,5 +40,62 @@ public class SmokeTest extends BaseTest {
         DashboardPage dashboardPage = new DashboardPage(driver, true);
 
         Assert.assertTrue(dashboardPage.getAddProjectButton().isDisplayed());
+    }
+
+    @Test
+    public void AddProject ()  {
+
+        Project project = new Project();
+        User user = new User()
+                .setEmail(ReadProperties.getUsername())
+                .setPassword(ReadProperties.getPassword());
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login(user);
+        DashboardPage dashboardPage = new DashboardPage(driver);
+        dashboardPage.getAddProjectButton().click();
+        AddProjectPage addProjectPage = new AddProjectPage(driver);
+        addProjectPage.addProject(project);
+        Assert.assertTrue(driver.findElement(By.xpath("//*[. = '"+project.getNameProject()+"']")).isDisplayed());
+
+
+    }
+
+    @Test
+    public void updateProject() {
+        Project project = new Project();
+        User user = new User()
+                .setEmail(ReadProperties.getUsername())
+                .setPassword(ReadProperties.getPassword());
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login(user);
+        DashboardPage dashboardPage = new DashboardPage(driver);
+        dashboardPage.getAddProjectButton().click();
+        AddProjectPage addProjectPage = new AddProjectPage(driver);
+        addProjectPage.addProject(project);
+        driver.findElement(By.xpath("//*[. = '"+project.getNameProject()+"']")).click();
+        driver.findElement(By.id("name")).sendKeys("asdffg");
+        driver.findElement(By.id("accept")).click();
+        Assert.assertTrue(driver.findElement(By.xpath("//*[. = 'Successfully updated the project.']")).isDisplayed());
+    }
+
+
+    @Test
+    public void delProject() {
+        Project project = new Project();
+        User user = new User()
+                .setEmail(ReadProperties.getUsername())
+                .setPassword(ReadProperties.getPassword());
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.login(user);
+        DashboardPage dashboardPage = new DashboardPage(driver);
+        dashboardPage.getAddProjectButton().click();
+        AddProjectPage addProjectPage = new AddProjectPage(driver);
+        addProjectPage.addProject(project);
+        driver.findElement(By.id("navigation-admin")).click();
+        driver.findElement(By.id("navigation-sub-projects")).click();
+        driver.findElement(By.xpath("//*[. = '"+project.getNameProject()+"']")).click();
+        driver.findElement(By.id("name")).sendKeys("asdffg");
+        driver.findElement(By.id("accept")).click();
+        Assert.assertTrue(driver.findElement(By.xpath("//*[. = 'Successfully updated the project.']")).isDisplayed());
     }
 }
