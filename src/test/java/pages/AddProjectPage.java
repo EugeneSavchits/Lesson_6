@@ -63,8 +63,8 @@ public class AddProjectPage extends BasePage {
         String nameProject= name.toString();
         project.setNameProject(nameProject);
 
-
         getNameProjectField().sendKeys(project.getNameProject());
+
         List<WebElement> typeProject = (List<WebElement>) getTypeProjectField();
         Random random = new Random();
         int randomValue = random.nextInt(typeProject.size());
