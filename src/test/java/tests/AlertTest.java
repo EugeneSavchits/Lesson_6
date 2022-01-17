@@ -40,7 +40,7 @@ public class AlertTest extends BaseTest {
         driver.findElement(By.xpath("//button[. = 'Click for JS Prompt']")).click();
 
         Alert alert = driver.switchTo().alert();
-        Assert.assertEquals(alert.getText(), "I am a JS Prompt");
+        Assert.assertEquals(alert.getText(), "I am a JS prompt");
 
         alert.sendKeys("Все гуд");
 

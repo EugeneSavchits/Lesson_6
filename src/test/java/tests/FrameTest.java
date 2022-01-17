@@ -11,12 +11,14 @@ public class FrameTest extends BaseTest {
     public void frameTest (){
         driver.get("https://the-internet.herokuapp.com/iframe");
 
-        driver.switchTo().frame(0);
-        Assert.assertEquals(driver.findElement(By.tagName("p")).getText(), "Your content goes here.");
+        //driver.switchTo().frame(0);// поиск по номеру фрейма
+        //driver.switchTo().frame(driver.findElement(By.id("mce_0_ifr"))); //пойск как вебэлемент
+        driver.switchTo().frame("mce_0_ifr"); //поиск по имени фрейма лиюо по ID
 
-        //driver.switchTo().frame(driver.findElement(By.id("mce_0_ifr")));
+        Assert.assertTrue(driver.findElement(By.id("tinymce")).isDisplayed());
 
-        //Assert.assertTrue(driver.findElement(By.id("tinymce")).isDisplayed());
+        //driver.switchTo().parentFrame(); //возврат к родительскому фрейму на уровень выше
+        //driver.switchTo().defaultContent(); //возврат на главнуую страницу
 
 
     }
