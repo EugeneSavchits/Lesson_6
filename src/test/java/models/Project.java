@@ -1,10 +1,12 @@
 package models;
 
+import enums.ProjectType;
+
 public class Project {
     private String name;
     private String announcement;
     private boolean isShowAnnouncement;
-    private int  typeOfProject;
+    private ProjectType typeOfProject;
     private boolean isCompleted;
 
     public Project() {
@@ -34,11 +36,11 @@ public class Project {
         isShowAnnouncement = showAnnouncement;
     }
 
-    public int getTypeOfProject() {
+    public ProjectType getTypeOfProject() {
         return typeOfProject;
     }
 
-    public void setTypeOfProject(int typeOfProject) {
+    public void setTypeOfProject(ProjectType typeOfProject) {
         this.typeOfProject = typeOfProject;
     }
 
