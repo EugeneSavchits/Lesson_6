@@ -5,17 +5,17 @@ import enums.ProjectType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class addProjectPage extends BasePage {
+public class AddProjectPage extends BasePage {
 
     private static String ENDPOINT = "/dashboard"; // поменять надо
     private static final By PAGE_OPENED_IDENTIFIER = By.id("activityChart"); //поменять надо
     private static String typeRadioButtonSelector = "//*[@name = 'suite_mode' and @value='replace']";
 
-    public addProjectPage(WebDriver driver) {
+    public AddProjectPage(WebDriver driver) {
         super(driver);
     }
 
-    public addProjectPage(WebDriver driver, boolean openPageByUrl) {
+    public AddProjectPage(WebDriver driver, boolean openPageByUrl) {
         super(driver, openPageByUrl);
     }
 
