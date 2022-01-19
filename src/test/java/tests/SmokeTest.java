@@ -6,7 +6,6 @@ import baseEntities.BaseTest;
 import core.ReadProperties;
 import models.Project;
 import models.User;
-import models.UserBuilder;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.DashboardPage;
@@ -19,9 +18,9 @@ public class SmokeTest extends BaseTest {
 
     @Test
     public void loginTest() {
-        User user = new User()
-                .setEmail(ReadProperties.getUsername())
-                .setPassword(ReadProperties.getPassword());
+        User user = new User();
+        user.setEmail(ReadProperties.getUsername());
+        user.setPassword(ReadProperties.getPassword());
 
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login(user);
@@ -30,19 +29,6 @@ public class SmokeTest extends BaseTest {
         Assert.assertTrue(dashboardPage.getAddProjectButton().isDisplayed());
     }
 
-    @Test
-    public void loginTestWithBuilder() {
-        UserBuilder user = new UserBuilder.Builder()
-                .withEmail(ReadProperties.getUsername())
-                .withPassword(ReadProperties.getPassword())
-                .build();
-
-        LoginPage loginPage = new LoginPage(driver);
-        //loginPage.login(user); //Поменять на класс UserBuilder в LoginPage
-
-        DashboardPage dashboardPage = new DashboardPage(driver);
-        Assert.assertTrue(dashboardPage.getAddProjectButton().isDisplayed());
-    }
 
     @Test (retryAnalyzer = Retry.class)
     public void flakyLoginTest() {
