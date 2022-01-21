@@ -2,8 +2,10 @@ package pages;
 
 import baseEntities.BasePage;
 import enums.ProjectType;
+import models.Project;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class addProjectPage extends BasePage {
 
@@ -14,7 +16,8 @@ public class addProjectPage extends BasePage {
     protected By nameProjectSelector = By.id("name");
     protected By announcementSelector = By.id("announcement");
     protected By isShowAnnouncementSelector = By.id("announcement");
-    protected By isCompleted = By.id("is_completed");
+    protected By isCompletedSelector = By.id("is_completed");
+    protected By addProjectButton = By.id("accept");
 
     public addProjectPage(WebDriver driver) {
         super(driver);
@@ -34,7 +37,32 @@ public class addProjectPage extends BasePage {
         return waits.waitForVisibility(PAGE_OPENED_IDENTIFIER).isDisplayed();
     }
 
+    public WebElement getNameProjectField() {
+        return driver.findElement(nameProjectSelector);
+    }
+
+    public WebElement getAnnouncementSelectorField() {
+        return driver.findElement(announcementSelector);
+    }
+
+    public WebElement getIsShowAnnouncementField () {
+        return driver.findElement(isShowAnnouncementSelector);
+    }
+
+    public WebElement getIsCompletedField () {
+        return driver.findElement(isCompletedSelector);
+    }
+
+    public WebElement getAddProjectButton () {
+        return driver.findElement(addProjectButton);
+    }
+
     public void setType (ProjectType type) {
         driver.findElement(By.xpath(typeRadioButtonSelector.replace("replace", String.valueOf(type))));
+    }
+
+    public void addProject (Project project) {
+    DashboardPage dashboardPage = new DashboardPage(driver);
+    dashboardPage.getAddProjectButton().click();
     }
 }
