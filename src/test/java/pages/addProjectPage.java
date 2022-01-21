@@ -7,9 +7,14 @@ import org.openqa.selenium.WebDriver;
 
 public class addProjectPage extends BasePage {
 
-    private static String ENDPOINT = "/dashboard"; // поменять надо
-    private static final By PAGE_OPENED_IDENTIFIER = By.id("activityChart"); //поменять надо
+    private static String ENDPOINT = "admin/projects/add/1";
+    private static final By PAGE_OPENED_IDENTIFIER = By.id("accept");
     private static String typeRadioButtonSelector = "//*[@name = 'suite_mode' and @value='replace']";
+
+    protected By nameProjectSelector = By.id("name");
+    protected By announcementSelector = By.id("announcement");
+    protected By isShowAnnouncementSelector = By.id("announcement");
+    protected By isCompleted = By.id("is_completed");
 
     public addProjectPage(WebDriver driver) {
         super(driver);
