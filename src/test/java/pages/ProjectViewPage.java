@@ -68,24 +68,23 @@ public class ProjectViewPage extends BasePage {
         return driver.findElement(saveProjectButton);
     }
 
-    public void updateProject (Project currentProject, Project newProject) throws InterruptedException {
+    public void updateProject (Project currentProject, Project newProject)  {
         getNameProjectField().clear();
-        Thread.sleep(3000);
         getNameProjectField().sendKeys(newProject.getName());
         getAnnouncementSelectorField().clear();
-        Thread.sleep(3000);
         getAnnouncementSelectorField().sendKeys(newProject.getAnnouncement());
         if (currentProject.isShowAnnouncement() == false) {
 
         } else {getIsShowAnnouncementField().click();}
         setType(newProject.getTypeOfProject());
         getIsCompletedField().click();
-        Thread.sleep(3000);
         getSaveProjectButton().click();
 
     }
 
     public void deleteProject (Project updateProject) {
-
+        driver.findElement(By.xpath("//*[. = '"+updateProject.getName()+"']/following::td[2]")).click();
+        driver.findElement(By.xpath("//strong [. = 'Yes, delete this project (cannot be undone)']")).click();
+        driver.findElement(By.xpath("//div[@id='deleteDialog']//a[@class = 'button button-ok button-left button-positive dialog-action-default']")).click();
     }
 }

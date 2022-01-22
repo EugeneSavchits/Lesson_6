@@ -34,13 +34,13 @@ public class SmokeTest extends BaseTest {
 
     private void setupProjects() {
         addProject = new Project();
-        addProject.setName(Randomization.getRandomString(2));
+        addProject.setName(Randomization.getRandomString(10));
         addProject.setTypeOfProject(Randomization.getRandomType());
         addProject.setAnnouncement(Randomization.getRandomString(25));
         addProject.setShowAnnouncement(true);
 
         updateProject = new Project();
-        updateProject.setName(Randomization.getRandomString(2));
+        updateProject.setName(Randomization.getRandomString(15));
         updateProject.setTypeOfProject(Randomization.getRandomType());
         updateProject.setAnnouncement(Randomization.getRandomString(25));
     }
@@ -57,13 +57,19 @@ public class SmokeTest extends BaseTest {
     }
 
     @Test (dependsOnMethods = "addProjectTest")
-    public void updateProjectTest () throws InterruptedException {
+    public void updateProjectTest ()  {
         ProjectViewPage projectViewPage = new ProjectViewPage(driver, true);
         projectViewPage.getOpenCurrentProject(addProject).click();
-        Thread.sleep(5000);
         projectViewPage.updateProject(addProject, updateProject);
         Assert.assertNotNull(driver.findElement(By.xpath("//*[. = '"+updateProject.getName()+"']")));
         Assert.assertTrue(driver.findElement(By.xpath("//*[@class = 'message message-success']")).isDisplayed());
+    }
+
+    @Test (dependsOnMethods = "updateProjectTest")
+    public void deleteProjectTest () {
+        ProjectViewPage projectViewPage = new ProjectViewPage(driver, true);
+        projectViewPage.deleteProject(updateProject);
+        Assert.assertEquals(driver.findElement(By.xpath("//*[@class = 'message message-success']")).getText(), "Successfully deleted the project.");
     }
 }
 
