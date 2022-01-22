@@ -14,6 +14,14 @@ public class ProjectViewPage extends BasePage {
 
     private static String openCurrentProjectSelector = "//*[. = 'replace']";
 
+    private static String typeRadioButtonSelector = "//*[@name = 'suite_mode' and @value='replace']";
+
+    protected By nameProjectSelector = By.id("name");
+    protected By announcementSelector = By.id("announcement");
+    protected By isShowAnnouncementSelector = By.id("show_announcement");
+    protected By isCompletedSelector = By.id("is_completed");
+    protected By saveProjectButton = By.id("accept");
+
     public ProjectViewPage(WebDriver driver) {
         super(driver);
     }
@@ -35,13 +43,7 @@ public class ProjectViewPage extends BasePage {
     public WebElement getOpenCurrentProject (Project currentProject) {
         return driver.findElement(By.xpath(openCurrentProjectSelector.replace("replace", currentProject.getName())));
     }
-    private static String typeRadioButtonSelector = "//*[@name = 'suite_mode' and @value='replace']";
 
-    protected By nameProjectSelector = By.id("name");
-    protected By announcementSelector = By.id("announcement");
-    protected By isShowAnnouncementSelector = By.id("show_announcement");
-    protected By isCompletedSelector = By.id("is_completed");
-    protected By saveProjectButton = By.id("accept");
 
     public void setType (ProjectType type) {
         driver.findElement(By.xpath(typeRadioButtonSelector.replace("replace", String.valueOf(type)))).click();
@@ -67,7 +69,6 @@ public class ProjectViewPage extends BasePage {
     }
 
     public void updateProject (Project currentProject, Project newProject) throws InterruptedException {
-
         getNameProjectField().clear();
         Thread.sleep(3000);
         getNameProjectField().sendKeys(newProject.getName());
@@ -81,6 +82,10 @@ public class ProjectViewPage extends BasePage {
         getIsCompletedField().click();
         Thread.sleep(3000);
         getSaveProjectButton().click();
+
+    }
+
+    public void deleteProject (Project updateProject) {
 
     }
 }
