@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 
 public class DashboardPage extends BasePage {
     private static String ENDPOINT = "/dashboard";
-    private static final By PAGE_OPENED_IDENTIFIER = By.id("activityChart");
+    private static final By PAGE_OPENED_IDENTIFIER = By.id("sidebar-projects-add");
 
     protected By addProjectButtonSelector = By.id("sidebar-projects-add");
 
