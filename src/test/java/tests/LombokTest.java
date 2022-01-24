@@ -11,7 +11,7 @@ public class LombokTest extends BaseTest {
     Project addProject;
     Project updateProject;
 
-    @Test
+    /*@Test
     public void loginTest() {
         User user = new User();
         user.setEmail(ReadProperties.getUsername());
@@ -23,7 +23,7 @@ public class LombokTest extends BaseTest {
 
         System.out.println(user.toString());
         System.out.println(user.equals(user1));
-    }
+    }*/
     @Test
     public void loginTestWithBuilderLombok() { // c Builder
         User user = User.builder()

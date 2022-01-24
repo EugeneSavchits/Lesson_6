@@ -5,7 +5,6 @@ import Utils.Retry;
 import baseEntities.BaseTest;
 import core.ReadProperties;
 import models.Project;
-import models.User;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.DashboardPage;
@@ -16,18 +15,18 @@ public class SmokeTest extends BaseTest {
     Project addProject;
     Project updateProject;
 
-    @Test
-    public void loginTest() {
-        User user = new User();
-        user.setEmail(ReadProperties.getUsername());
-        user.setPassword(ReadProperties.getPassword());
+   // @Test
+   // public void loginTest() {
+        //User user = new User.builder();
+        //user.setEmail(ReadProperties.getUsername());
+        //user.setPassword(ReadProperties.getPassword());
 
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.login(user);
+        //LoginPage loginPage = new LoginPage(driver);
+       // loginPage.login(user);
 
-        DashboardPage dashboardPage = new DashboardPage(driver);
-        Assert.assertTrue(dashboardPage.getAddProjectButton().isDisplayed());
-    }
+        //DashboardPage dashboardPage = new DashboardPage(driver);
+        //Assert.assertTrue(dashboardPage.getAddProjectButton().isDisplayed());
+    //}
 
 
     @Test (retryAnalyzer = Retry.class)
