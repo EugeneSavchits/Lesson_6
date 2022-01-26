@@ -13,7 +13,7 @@ import steps.ProjectSteps;
 
 @Listeners(Listener.class)
 public class BaseTest {
-    protected WebDriver driver;
+    public WebDriver driver;
     protected BrowsersService browsersService;
     protected Waits waits;
 
