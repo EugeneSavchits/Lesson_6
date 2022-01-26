@@ -13,8 +13,8 @@ import java.io.IOException;
 public class httpClientTest {
 
     @Test
-    public void simpleApiTest() throws IOException {
-        String restURL = "https://regres.in";
+    public void SimpleApiTest() throws IOException {
+        String restURL = "https://reqres.in";
 
         //Create Object and pass to url
         HttpUriRequest request = new HttpGet(restURL);

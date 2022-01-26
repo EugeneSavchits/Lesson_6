@@ -11,6 +11,10 @@ public enum ProjectType {
         this.projectType=projectType;
     }
 
+    public int getProjectType() {
+        return projectType;
+    }
+
     public String toString () {
         switch (this){
             case SINGLE:
