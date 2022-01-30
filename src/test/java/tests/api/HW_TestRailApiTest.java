@@ -1,13 +1,16 @@
 package tests.api;
 
+import Utils.Endpoints;
 import baseEntities.BaseApiTest;
 import enums.ProjectType;
 import io.restassured.mapper.ObjectMapperType;
 import models.*;
 import org.apache.http.HttpStatus;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.is;
 
 public class HW_TestRailApiTest extends BaseApiTest {
 
@@ -34,15 +37,13 @@ public class HW_TestRailApiTest extends BaseApiTest {
                 .then()
                 .log().body()
                 .statusCode(HttpStatus.SC_OK)
+                .body("name", is(project.getName()))
+                .body("suite_mode", is(project.getTypeOfProject()))
                 .extract().jsonPath().get("id");
-
-        System.out.println(projectID);
     }
 
     @Test (dependsOnMethods = "addMilestone")
     public void getMilestones () {
-        System.out.println(projectID);
-
         String endpoint = "/index.php?/api/v2/get_milestones/{project_id}";
 
         given()
@@ -56,8 +57,6 @@ public class HW_TestRailApiTest extends BaseApiTest {
 
     @Test (dependsOnMethods = "addProject")
     public void addMilestone(){
-        System.out.println(projectID);
-
         String endpoint = "/index.php?/api/v2/add_milestone/{project_id}";
 
         MilestoneBuilderApi milestone = MilestoneBuilderApi.builder()
@@ -74,13 +73,13 @@ public class HW_TestRailApiTest extends BaseApiTest {
                 .then()
                 .log().body()
                 .statusCode(HttpStatus.SC_OK)
+                .body("name", is(milestone.getName()))
+                .body("description", is(milestone.getDescription()))
                 .extract().jsonPath().get("id");
     }
 
     @Test (dependsOnMethods = "getMilestones")
     public void updateMilestone(){
-        System.out.println(milestoneID);
-
         String endpoint = "/index.php?/api/v2/update_milestone/{milestone_id}";
 
         MilestoneBuilderApi updateMilestone = MilestoneBuilderApi.builder()
@@ -96,15 +95,14 @@ public class HW_TestRailApiTest extends BaseApiTest {
                 .post(endpoint)
                 .then()
                 .log().body()
-                .statusCode(HttpStatus.SC_OK);
+                .statusCode(HttpStatus.SC_OK)
+                .body("name", is(updateMilestone.getName()))
+                .body("description", is(updateMilestone.getDescription()));
     }
 
     @Test (dependsOnMethods = "updateMilestone")
     public void deleteMilestone(){
-        System.out.println(milestoneID);
-
         String endpoint = "/index.php?/api/v2/delete_milestone/{milestone_id}";
-
 
         given()
                 .pathParam("milestone_id", milestoneID)
@@ -133,10 +131,10 @@ public class HW_TestRailApiTest extends BaseApiTest {
                 .then()
                 .log().body()
                 .statusCode(HttpStatus.SC_OK)
+                .body("name", is(suite.getName()))
+                .body("description", is(suite.getDescription()))
                 .extract().jsonPath().get("id");
-
-        System.out.println(suiteID);
-    }
+            }
 
     @Test (dependsOnMethods = "addSuite")
     public void addSection(){
@@ -156,9 +154,9 @@ public class HW_TestRailApiTest extends BaseApiTest {
                 .then()
                 .log().body()
                 .statusCode(HttpStatus.SC_OK)
+                .body("name", is(section.getName()))
+                .body("suite_id", is(section.getSuite_id()))
                 .extract().jsonPath().get("id");
-
-        System.out.println(sectionID);
     }
 
     @Test (dependsOnMethods = "addSection")
@@ -181,22 +179,28 @@ public class HW_TestRailApiTest extends BaseApiTest {
                 .statusCode(HttpStatus.SC_OK)
                 .extract().jsonPath().get("id");
 
-        System.out.println(caseID);
+        CaseBuilderApi actualCase = given()
+                .pathParam("case_id", caseID)
+                .when()
+                .get(Endpoints.GET_CASE)
+                .then()
+                .assertThat()
+                .extract()
+                .as(CaseBuilderApi.class);
 
+        Assert.assertEquals(actualCase, case1);
     }
 
     @Test (dependsOnMethods = "addCase")
     public void getCase(){
-        String endpoint = "/index.php?/api/v2/get_case/{case_id}";
 
         given()
                 .pathParam("case_id", caseID)
                 .when()
-                .get(endpoint)
+                .get(Endpoints.GET_CASE)
                 .then()
                 .log().body()
                 .statusCode(HttpStatus.SC_OK);
-
     }
 
     @Test (dependsOnMethods = "getCase")
@@ -208,7 +212,7 @@ public class HW_TestRailApiTest extends BaseApiTest {
                 .priority_id(1)
                 .build();
 
-        given()
+       CaseBuilderApi actualCase = given()
                 .pathParam("case_id", caseID)
                 .body(case2, ObjectMapperType.GSON)
                 .log().body()
@@ -216,19 +220,17 @@ public class HW_TestRailApiTest extends BaseApiTest {
                 .post(endpoint)
                 .then()
                 .log().body()
-                .statusCode(HttpStatus.SC_OK);
+                .assertThat()
+                .statusCode(HttpStatus.SC_OK)
+                .extract()
+                .as(CaseBuilderApi.class);
+
+       Assert.assertEquals(actualCase, case2);
     }
 
     @Test (dependsOnMethods = "updateCase")
     public void moveCasesToSection(){
         String endpoint = "index.php?/api/v2/move_cases_to_section/{section_id}";
-
-        /*MoveCasesToSectionApi moveCasesToSectionApi = MoveCasesToSectionApi.builder()
-                        .section_id(section_ID)
-                        .suite_id(suiteID)
-                                .case_ids([case_ID])*/
-
-
 
         given()
                 .pathParam("section_id", sectionID)
@@ -241,7 +243,6 @@ public class HW_TestRailApiTest extends BaseApiTest {
                 .when()
                 .post(endpoint)
                 .then()
-                .log().body()
                 .statusCode(HttpStatus.SC_OK);
     }
 
@@ -254,7 +255,6 @@ public class HW_TestRailApiTest extends BaseApiTest {
                 .when()
                 .post(endpoint)
                 .then()
-                .log().body()
                 .statusCode(HttpStatus.SC_OK);
     }
 
@@ -268,7 +268,6 @@ public class HW_TestRailApiTest extends BaseApiTest {
                 .when()
                 .post(endpoint)
                 .then()
-                .log().body()
                 .statusCode(HttpStatus.SC_OK);
     }
 }
