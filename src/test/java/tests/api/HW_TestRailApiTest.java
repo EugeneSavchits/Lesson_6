@@ -14,8 +14,8 @@ public class HW_TestRailApiTest extends BaseApiTest {
     int projectID;
     int milestoneID;
     int suiteID;
-    int section_ID;
-    int case_ID;
+    int sectionID;
+    int caseID;
 
     @Test
     public void addProject(){
@@ -147,7 +147,7 @@ public class HW_TestRailApiTest extends BaseApiTest {
                 .suite_id(suiteID)
                 .build();
 
-        section_ID = given()
+        sectionID = given()
                 .pathParam("project_id", projectID)
                 .body(section, ObjectMapperType.GSON)
                 .log().body()
@@ -158,7 +158,7 @@ public class HW_TestRailApiTest extends BaseApiTest {
                 .statusCode(HttpStatus.SC_OK)
                 .extract().jsonPath().get("id");
 
-        System.out.println(section_ID);
+        System.out.println(sectionID);
     }
 
     @Test (dependsOnMethods = "addSection")
@@ -170,8 +170,8 @@ public class HW_TestRailApiTest extends BaseApiTest {
                 .priority_id(2)
                 .build();
 
-        case_ID = given()
-                .pathParam("section_id", section_ID)
+        caseID = given()
+                .pathParam("section_id", sectionID)
                 .body(case1, ObjectMapperType.GSON)
                 .log().body()
                 .when()
@@ -181,7 +181,7 @@ public class HW_TestRailApiTest extends BaseApiTest {
                 .statusCode(HttpStatus.SC_OK)
                 .extract().jsonPath().get("id");
 
-        System.out.println(case_ID);
+        System.out.println(caseID);
 
     }
 
@@ -190,7 +190,7 @@ public class HW_TestRailApiTest extends BaseApiTest {
         String endpoint = "/index.php?/api/v2/get_case/{case_id}";
 
         given()
-                .pathParam("case_id", case_ID)
+                .pathParam("case_id", caseID)
                 .when()
                 .get(endpoint)
                 .then()
@@ -209,7 +209,7 @@ public class HW_TestRailApiTest extends BaseApiTest {
                 .build();
 
         given()
-                .pathParam("case_id", case_ID)
+                .pathParam("case_id", caseID)
                 .body(case2, ObjectMapperType.GSON)
                 .log().body()
                 .when()
@@ -223,15 +223,20 @@ public class HW_TestRailApiTest extends BaseApiTest {
     public void moveCasesToSection(){
         String endpoint = "index.php?/api/v2/move_cases_to_section/{section_id}";
 
-        MoveCasesToSectionApi moveCasesToSectionApi = MoveCasesToSectionApi.builder()
+        /*MoveCasesToSectionApi moveCasesToSectionApi = MoveCasesToSectionApi.builder()
                         .section_id(section_ID)
                         .suite_id(suiteID)
+                                .case_ids([case_ID])*/
 
 
 
         given()
-                .pathParam("section_id", section_ID)
-                .body(moveCasesToSectionApi,ObjectMapperType.GSON)
+                .pathParam("section_id", sectionID)
+                .body(String.format("{\n" +
+                        "  \"section_id\": %d,\n" +
+                        "  \"suite_id\": %d,\n" +
+                        "  \"case_ids\": [%d]\n" +
+                        "}", sectionID, suiteID, caseID))
                 .log().body()
                 .when()
                 .post(endpoint)
@@ -240,10 +245,21 @@ public class HW_TestRailApiTest extends BaseApiTest {
                 .statusCode(HttpStatus.SC_OK);
     }
 
+    @Test(dependsOnMethods = "moveCasesToSection")
+    public void deleteCase(){
+        String endpoint = "index.php?/api/v2/delete_case/{case_id}";
+
+        given()
+                .pathParam("case_id", caseID)
+                .when()
+                .post(endpoint)
+                .then()
+                .log().body()
+                .statusCode(HttpStatus.SC_OK);
+    }
 
 
-
-    /*@Test (dependsOnMethods = "deleteMilestone")
+    @Test (dependsOnMethods = "deleteCase")
     public void deleteProject() {
         String endpoint = "/index.php?/api/v2/delete_project/{project_id}";
 
@@ -254,5 +270,5 @@ public class HW_TestRailApiTest extends BaseApiTest {
                 .then()
                 .log().body()
                 .statusCode(HttpStatus.SC_OK);
-    }*/
+    }
 }

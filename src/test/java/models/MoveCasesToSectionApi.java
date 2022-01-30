@@ -8,5 +8,5 @@ import lombok.Data;
 public class MoveCasesToSectionApi {
     private int section_id;
     private int suite_id;
-    private int[] case_ids[];
+    private int case_ids[];
 }
