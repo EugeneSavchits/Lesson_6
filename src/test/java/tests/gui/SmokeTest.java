@@ -1,6 +1,5 @@
 package tests.gui;
 
-import Utils.Randomization;
 import Utils.Retry;
 import baseEntities.BaseTest;
 import core.ReadProperties;
@@ -44,7 +43,7 @@ public class SmokeTest extends BaseTest {
         Assert.assertTrue(dashboardPage.getAddProjectButton().isDisplayed());
     }
 
-    private void setupProjects() {
+    /*private void setupProjects() {
         addProject = new Project();
         addProject.setName(Randomization.getRandomString(8));
         addProject.setTypeOfProject(Randomization.getRandomType());
@@ -52,7 +51,7 @@ public class SmokeTest extends BaseTest {
         updateProject = new Project();
         updateProject.setName(Randomization.getRandomString(8));
         updateProject.setTypeOfProject(Randomization.getRandomType());
-    }
+    }*/
 
 }
 
