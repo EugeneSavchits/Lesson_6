@@ -10,6 +10,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.DashboardPage;
 import pages.LoginPage;
+import steps.ProjectSteps;
 
 public class SmokeTest extends BaseTest {
 
@@ -52,6 +53,15 @@ public class SmokeTest extends BaseTest {
         updateProject = new Project();
         updateProject.setName(Randomization.getRandomString(8));
         updateProject.setTypeOfProject(Randomization.getRandomType());
+    }
+
+
+    @Test
+    public void stepTest(){
+        setupProjects();
+        ProjectSteps projectSteps = new ProjectSteps(driver);
+        projectSteps.
+        Assert.assertTrue(true);
     }
 
 }
