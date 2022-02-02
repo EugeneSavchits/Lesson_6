@@ -59,8 +59,9 @@ public class SmokeTest extends BaseTest {
     @Test
     public void stepTest(){
         setupProjects();
+
         ProjectSteps projectSteps = new ProjectSteps(driver);
-        projectSteps.
+        projectSteps.addProject(addProject);
         Assert.assertTrue(true);
     }
 

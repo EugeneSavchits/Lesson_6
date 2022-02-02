@@ -1,5 +1,4 @@
 package Utils;
-
 import java.util.Random;
 
 public class Randomization {

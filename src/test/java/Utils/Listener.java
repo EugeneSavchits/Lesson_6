@@ -1,6 +1,7 @@
 package Utils;
 
 import baseEntities.BaseTest;
+import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -19,5 +20,10 @@ public class Listener implements ITestListener {
         } catch (Exception ex) {
 
         }
+    }
+
+    @Attachment(value = "Page screenshot", type = "image/png")
+    private byte[] saveScreenshot(byte[] screenshot) {
+        return screenshot;
     }
 }
