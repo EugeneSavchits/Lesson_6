@@ -1,8 +1,10 @@
 package elements;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import utils.Waits;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UIElement implements WebElement {
@@ -18,7 +20,6 @@ public class UIElement implements WebElement {
         this.webElement = driver.findElement(by);
         this.waits = new Waits(driver);
     }
-
 
     public UIElement(WebDriver driver,WebElement webElement){
         this.driver = driver;
@@ -43,15 +44,14 @@ public class UIElement implements WebElement {
     }
 
     @Override
-    public void sendKeys(CharSequence... CharSequence) {
+        public void sendKeys(CharSequence... charSequences) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", webElement);
-        webElement.sendKeys(CharSequence);
+        webElement.sendKeys(charSequences);
     }
 
     @Override
     public void clear() {
         webElement.clear();
-
     }
 
     @Override
@@ -60,83 +60,79 @@ public class UIElement implements WebElement {
     }
 
     @Override
-    public String getDomProperty(String name) {
-        return WebElement.getDomProperty(name);
-    }
-
-    @Override
-    public String getDomAttribute(String name) {
-        return WebElement.getDomAttribute(name);
-    }
-
-    @Override
     public String getAttribute(String name) {
-        return null;
-    }
-
-    @Override
-    public String getAriaRole() {
-        return WebElement.super.getAriaRole();
-    }
-
-    @Override
-    public String getAccessibleName() {
-        return WebElement.super.getAccessibleName();
+        return webElement.getAttribute(name);
     }
 
     @Override
     public boolean isSelected() {
-        return false;
+        return webElement.isSelected();
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return webElement.isEnabled();
     }
 
     @Override
     public String getText() {
+        return webElement.getText();
+    }
+
+    @Override
+    public List<WebElement> findElements(By by){
         return null;
     }
 
-    @Override
-    public List<WebElement> findElements(By by) {
-        return webElement.findElements(by);
+
+    public ArrayList<UIElement> findUIElements(By by) {
+        ArrayList<UIElement> list = new ArrayList<>();
+        for (WebElement element : webElement.findElements(by)) {
+            list.add(new UIElement(driver, element));
+        }
+        return list;
     }
 
     @Override
-    public WebElement findElement(By by) {
-        return webElement.findElement(by);
+    public UIElement findElement(By by) {
+        return new UIElement(driver, webElement.findElement(by));
     }
-
 
     @Override
     public boolean isDisplayed() {
-        return false;
+        return webElement.isDisplayed();
     }
 
     @Override
     public Point getLocation() {
-        return null;
+        return webElement.getLocation();
     }
 
     @Override
     public Dimension getSize() {
-        return null;
+        return webElement.getSize();
     }
 
     @Override
     public Rectangle getRect() {
-        return null;
+        return webElement.getRect();
     }
 
     @Override
     public String getCssValue(String propertyName) {
-        return null;
+        return webElement.getCssValue(propertyName);
     }
 
     @Override
-    public <X> X getScreenshotAs(OutputType<X> target) throws WebDriverException {
-        return null;
+    public <X> X getScreenshotAs(OutputType<X> outputType) throws WebDriverException {
+        return webElement.getScreenshotAs(outputType);
     }
+
+    public void DoubleClick () {
+        new Actions(driver)
+                .doubleClick()
+                .build()
+                .perform();
+    }
+
 }
