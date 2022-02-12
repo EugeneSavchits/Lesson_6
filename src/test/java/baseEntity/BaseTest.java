@@ -1,64 +1,29 @@
 package baseEntity;
 
-import core.BrowsersService;
-import core.ReadProperties;
-import models.Project;
-import models.User;
-import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Listeners;
-import steps.MilestoneSteps;
-import steps.ProjectSteps;
-import utils.Listener;
-import utils.Randomization;
-import utils.Waits;
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.testng.annotations.BeforeSuite;
 
-@Listeners(Listener.class)
 public class BaseTest {
-    public WebDriver driver;
-    protected BrowsersService browsersService;
-    protected Waits waits;
+    String url = "https://qa1505.testrail.io";
+    public String username = "atrostyanko+0401@gmail.com";
+    public String password = "QqtRK9elseEfAk6ilYcJ";
 
-    protected ProjectSteps projectSteps;
-    protected MilestoneSteps milestoneSteps;
+    @BeforeSuite
+    public void setupAllureReports() {
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
 
-    protected User user;
-    protected Project addProject;
-    protected Project updateProject;
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
+                .screenshots(false)
+                .savePageSource(true)
+        );
 
-    @BeforeTest
-    public void setUpData() {
-        user = User.builder()
-                .email(ReadProperties.getUsername())
-                .password(ReadProperties.getPassword())
-                .build();
+        org.apache.log4j.BasicConfigurator.configure();
 
-        addProject = Project.builder()
-                .name(Randomization.getRandomString(8))
-                .typeOfProject(Randomization.getRandomType())
-                .build();
+        Configuration.baseUrl = url;
+        Configuration.browser = "chrome";
+        Configuration.startMaximized = true;
 
-        updateProject = Project.builder()
-                .name(Randomization.getRandomString(8))
-                .typeOfProject(Randomization.getRandomType())
-                .build();
-    }
-
-    @BeforeClass
-    public void setUp() {
-        browsersService = new BrowsersService();
-        driver = browsersService.getDriver();
-        waits = new Waits(driver);
-        projectSteps = new ProjectSteps(driver);
-        milestoneSteps = new MilestoneSteps(driver);
-
-        driver.get(ReadProperties.getUrl());
-    }
-
-    @AfterClass
-    public void closePage() {
-        driver.quit();
     }
 }
