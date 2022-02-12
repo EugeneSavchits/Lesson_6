@@ -2,9 +2,13 @@ package tests;
 
 
 import baseEntity.BaseTest;
+import dbEntries.MilestoneTable;
+import dbEntries.ProjectsTable;
+import dbEntries.TestCaseTable;
 import models.Milestone;
 import models.Project;
 import models.TestCase;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 import pages.AddMilestonePage;
@@ -12,13 +16,18 @@ import pages.AddProjectPage;
 import pages.AddTestCasePage;
 import pages.LoginPage;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
-public class HW_SelenideTests extends BaseTest {
+public class HW_Database extends BaseTest {
+
+    public static Logger logger = Logger.getLogger(HW_Database.class);
 
     Project addProject;
     Milestone addMilestone;
@@ -42,10 +51,34 @@ public class HW_SelenideTests extends BaseTest {
 
     @Test(dependsOnMethods = "loginTest")
     public void addProjectTest() {
+
+        ProjectsTable projectsTable = new ProjectsTable(dataBaseService);
+
+        projectsTable.createTable();
+        projectsTable.addProject("AAA_SEA", "SEA_Announcement");
+
+        String nameProject = null;
+        String announcement = null;
+
+        ResultSet rs = projectsTable.getProjectByID(1);
+
+        try {
+            while (rs.next()) {
+                nameProject = rs.getString("project");
+                announcement = rs.getString("announcement");
+
+                logger.info("nameProject: " + nameProject);
+                logger.info("lastname: " + announcement);
+            }
+        } catch (SQLException e) {
+            logger.error(e.toString());
+        }
+        projectsTable.dropTable();
+
         open("/index.php?/admin/projects/add/1");
         addProject = new Project();
-        addProject.setName("AAA_SEA");
-        addProject.setAnnouncement("SEA_Announcement");
+        addProject.setName(nameProject);
+        addProject.setAnnouncement(announcement);
 
 
         AddProjectPage addProjectPage = new AddProjectPage();
@@ -59,10 +92,36 @@ public class HW_SelenideTests extends BaseTest {
         $(byText(addProject.getName())).click();
         $("#navigation-overview-addmilestones").click();
 
+        MilestoneTable milestoneTable = new MilestoneTable(dataBaseService);
+
+        milestoneTable.createTable();
+        milestoneTable.addMilestone("SEA_Milestone", "SEA_References", "SEA_Description");
+        milestoneTable.addMilestone("UPDATE_SEA_Milestone", "UPDATE_SEA_References", "UPDATE_SEA_Description");
+
+        String nameMilestone = null;
+        String reference = null;
+        String description = null;
+
+        ResultSet rs = milestoneTable.getMilestoneByID(1);
+
+        try {
+            while (rs.next()) {
+                nameMilestone = rs.getString("milestone");
+                reference = rs.getString("reference");
+                description = rs.getString("description");
+
+                logger.info("nameMilestone: " + nameMilestone);
+                logger.info("reference: " + reference);
+                logger.info("description: " + description);
+            }
+        } catch (SQLException e) {
+            logger.error(e.toString());
+        }
+
         addMilestone = new Milestone();
-        addMilestone.setName("SEA_Milestone");
-        addMilestone.setReferences("SEA_References");
-        addMilestone.setDescription("SEA_Description");
+        addMilestone.setName(nameMilestone);
+        addMilestone.setReferences(reference);
+        addMilestone.setDescription(description);
 
         AddMilestonePage addMilestonePage = new AddMilestonePage();
         addMilestonePage.addMilestone(addMilestone);
@@ -75,10 +134,34 @@ public class HW_SelenideTests extends BaseTest {
         $(byText(addMilestone.getName())).click();
         $(byText("Edit")).click();
 
+        MilestoneTable milestoneTable = new MilestoneTable(dataBaseService);
+
+        String nameMilestone = null;
+        String reference = null;
+        String description = null;
+
+        ResultSet rs = milestoneTable.getMilestoneByID(2);
+
+        try {
+            while (rs.next()) {
+                nameMilestone = rs.getString("milestone");
+                reference = rs.getString("reference");
+                description = rs.getString("description");
+
+                logger.info("nameMilestone: " + nameMilestone);
+                logger.info("reference: " + reference);
+                logger.info("description: " + description);
+            }
+        } catch (SQLException e) {
+            logger.error(e.toString());
+        }
+
+        milestoneTable.dropTable();
+
         updateMilestone = new Milestone();
-        updateMilestone.setName("Update_SEA_Milestone");
-        updateMilestone.setReferences("Update_SEA_References");
-        updateMilestone.setDescription("Update_SEA_Description");
+        updateMilestone.setName(nameMilestone);
+        updateMilestone.setReferences(reference);
+        updateMilestone.setDescription(description);
 
         AddMilestonePage updateMilestonePage = new AddMilestonePage();
         updateMilestonePage.updateMilestone(updateMilestone);
@@ -102,9 +185,34 @@ public class HW_SelenideTests extends BaseTest {
         $(byText(addProject.getName())).click();
         $("#sidebar-cases-add").click();
 
+        TestCaseTable testCaseTable = new TestCaseTable(dataBaseService);
+
+        testCaseTable.createTable();
+        testCaseTable.addTestcase("SEA_TEST_CASE", "SEA_Preconditions");
+        testCaseTable.addTestcase("UPDATE_SEA_TEST_CASE", "UPDATE_SEA_Preconditions");
+
+        String title = null;
+        String preconditions = null;
+
+        ResultSet rs = testCaseTable.getMilestoneByID(1);
+
+        try {
+            while (rs.next()) {
+                title = rs.getString("title");
+                preconditions = rs.getString("preconditions");
+
+
+                logger.info("titleTestCase: " + title);
+                logger.info("preconditions: " + preconditions);
+            }
+        } catch (SQLException e) {
+            logger.error(e.toString());
+        }
+
+
         addTestCase = new TestCase();
-        addTestCase.setTitle("SEA_TEST_CASE");
-        addTestCase.setPreconditions("SEA_Preconditions");
+        addTestCase.setTitle(title);
+        addTestCase.setPreconditions(preconditions);
 
         AddTestCasePage addTestCasePage = new AddTestCasePage();
         addTestCasePage.addTestCase(addTestCase);
@@ -117,9 +225,31 @@ public class HW_SelenideTests extends BaseTest {
     public void updateTestCaseTest() {
         $(byText("Edit")).click();
 
+        TestCaseTable testCaseTable = new TestCaseTable(dataBaseService);
+
+        String title = null;
+        String preconditions = null;
+
+        ResultSet rs = testCaseTable.getMilestoneByID(2);
+
+        try {
+            while (rs.next()) {
+                title = rs.getString("title");
+                preconditions = rs.getString("preconditions");
+
+
+                logger.info("titleTestCase: " + title);
+                logger.info("preconditions: " + preconditions);
+            }
+        } catch (SQLException e) {
+            logger.error(e.toString());
+        }
+
+        testCaseTable.dropTable();
+
         updateTestCase = new TestCase();
-        updateTestCase.setTitle("UPDATE_SEA_TEST_CASE");
-        updateTestCase.setPreconditions("UPDATE_SEA_Preconditions");
+        updateTestCase.setTitle(title);
+        updateTestCase.setPreconditions(preconditions);
 
         AddTestCasePage updateTestCasePage = new AddTestCasePage();
         updateTestCasePage.updateTestCase(updateTestCase);
