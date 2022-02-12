@@ -1,48 +1,22 @@
 package pages;
 
-import baseEntity.BasePage;
-import elements.Button;
-import elements.Input;
-import models.User;
+import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
-public class LoginPage extends BasePage {
-    private static final By PAGE_OPENED_IDENTIFIER = By.id("button_primary");
-    private static String ENDPOINT = "/index.php?/auth/login";
-    protected By emailSelector = By.id("name");
-    protected By passwordSelector = By.id("password");
-    protected By loginSelector = By.id("button_primary");
+import static com.codeborne.selenide.Selenide.$;
 
-    public LoginPage(WebDriver driver) {
-        super(driver);
+public class LoginPage {
+    private final By username_selector = By.id("name"); //поиск через By
+    private final String password_selector = "#password";// поиск через CSS сеоектор тогда можно как String
+    private final String login_button_selector = "#button_primary";
+
+    public SelenideElement getUsernameField() {
+        return $(username_selector);
     }
-
-    @Override
-    protected void openPage() {
-        driver.get(BASE_URL + ENDPOINT);
+    public SelenideElement getPasswordField() {
+        return $(password_selector);
     }
-
-    @Override
-    protected boolean isPageOpened() {
-        return waits.waitForVisibility(PAGE_OPENED_IDENTIFIER).isDisplayed();
-    }
-
-    public Input getEmailField() {
-        return new Input(driver, emailSelector);
-    }
-
-    public Input getPasswordField() {
-        return new Input(driver, passwordSelector);
-    }
-
-    public Button getLoginButton() {
-        return new Button(driver, loginSelector);
-    }
-
-    public void login(User user) {
-        getEmailField().sendKeys(user.getEmail());
-        getPasswordField().sendKeys(user.getPassword());
-        getLoginButton().click();
+    public SelenideElement getLoginButton() {
+        return $(login_button_selector);
     }
 }
