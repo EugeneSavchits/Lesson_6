@@ -1,4 +1,4 @@
-package tests.gui;
+package test.gui;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;

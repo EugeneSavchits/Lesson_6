@@ -1,4 +1,4 @@
-package tests.gui;
+package test.gui;
 
 import baseEntity.BaseTest;
 import org.testng.Assert;

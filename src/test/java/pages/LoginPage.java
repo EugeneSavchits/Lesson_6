@@ -1,11 +1,10 @@
 package pages;
 
 import baseEntity.BasePage;
-import elements.Button;
-import elements.Input;
 import models.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class LoginPage extends BasePage {
     private static final By PAGE_OPENED_IDENTIFIER = By.id("button_primary");
@@ -15,13 +14,8 @@ public class LoginPage extends BasePage {
     protected By loginSelector = By.id("button_primary");
 
     public LoginPage(WebDriver driver) {
-        super(driver);
+        super(driver, true);
     }
-
-    public LoginPage(WebDriver driver, boolean openByUrl) {
-        super(driver, openByUrl);
-    }
-
 
     @Override
     protected void openPage() {
@@ -33,16 +27,16 @@ public class LoginPage extends BasePage {
         return waits.waitForVisibility(PAGE_OPENED_IDENTIFIER).isDisplayed();
     }
 
-    public Input getEmailField() {
-        return new Input(driver, emailSelector);
+    public WebElement getEmailField() {
+        return driver.findElement(emailSelector);
     }
 
-    public Input getPasswordField() {
-        return new Input(driver, passwordSelector);
+    public WebElement getPasswordField() {
+        return driver.findElement(passwordSelector);
     }
 
-    public Button getLoginButton() {
-        return new Button(driver, loginSelector);
+    public WebElement getLoginButton() {
+        return driver.findElement(loginSelector);
     }
 
     public void login(User user) {

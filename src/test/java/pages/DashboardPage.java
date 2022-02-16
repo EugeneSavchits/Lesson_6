@@ -11,6 +11,7 @@ public class DashboardPage extends BasePage {
     protected By addProjectButtonSelector = By.id("sidebar-projects-add");
     protected By USERNAME = By.className("navigation-username");
 
+
     public DashboardPage(WebDriver driver) {
         super(driver);
     }
@@ -33,11 +34,12 @@ public class DashboardPage extends BasePage {
         return driver.findElement(addProjectButtonSelector);
     }
 
-    public WebElement getUsernameLink(){
+    public WebElement getUsernameLink() {
         return driver.findElement(USERNAME);
     }
 
-    public String getVisibleUsername(){
+    public String getVisibleUsername() {
         return getUsernameLink().getText();
     }
+
 }
