@@ -6,6 +6,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import models.Milestone;
 import models.Project;
+import org.openqa.selenium.By;
 import pages.AddMilestonePage;
 import pages.AddProjectPage;
 import pages.LoginPage;
@@ -22,6 +23,8 @@ public class MilestonStepdefs  {
     AddProjectPage addProjectPage;
     Milestone addMilestone;
     AddMilestonePage addMilestonePage;
+    Milestone updateMilestone;
+    AddMilestonePage updateMilestonePage;
 
     @Given("browser is open")
     public void browserIsOpen() {
@@ -82,5 +85,45 @@ public class MilestonStepdefs  {
     @Then("message milestone {string} is displayed")
     public void messageMilestoneIsDisplayed(String messageMilestoneAdded) {
         addMilestonePage.getMessageMilestoneAdded().shouldBe(visible).shouldHave(text(messageMilestoneAdded));
+    }
+
+    @Given("Update milestone page is opened")
+    public void updateMilestonePageIsOpened() {
+        $(byText("SEA_Milestone")).click();
+        $(byText("Edit")).click();
+    }
+
+    @When("update name milestone {string}, references milestone {string}, description milestone {string}")
+    public void updateNameMilestoneReferencesMilestoneDescriptionMilestone(String updateNameMilestone, String updateReferences, String updateDescription) {
+        updateMilestone = new Milestone();
+        updateMilestone.setName(updateNameMilestone);
+        updateMilestone.setReferences(updateReferences);
+        updateMilestone.setDescription(updateDescription);
+
+        updateMilestonePage = new AddMilestonePage();
+        updateMilestonePage.updateMilestone(updateMilestone);
+    }
+
+    @Then("message update milestone {string} is displayed")
+    public void messageUpdateMilestoneIsDisplayed(String messageMilestoneUpdate) {
+        updateMilestonePage.getMessageMilestoneAdded().shouldBe(visible).shouldHave(text(messageMilestoneUpdate));
+    }
+
+    @Given("Milestone page is opened")
+    public void milestonePageIsOpened() {
+        $(byText("Update_SEA_Milestone")).click();
+        $(byText("Edit")).click();
+    }
+
+    @When("delete milestone")
+    public void deleteMilestone() {
+        $(By.xpath("//*[@class = 'button button-negative button-delete']")).click();
+        $(byText("Yes, delete this milestone (cannot be undone)")).click();
+        $(By.xpath("//div[@id='deleteDialog']//a[@class = 'button button-ok button-left button-positive dialog-action-default']")).click();
+    }
+
+    @Then("message delete milestone {string} is displayed")
+    public void messageDeleteMilestoneIsDisplayed(String messageMilestoneDelete) {
+        $(By.xpath("//*[@class = 'message message-success']")).shouldBe(visible).shouldHave(text(messageMilestoneDelete));
     }
 }

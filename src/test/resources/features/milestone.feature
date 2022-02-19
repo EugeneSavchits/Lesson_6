@@ -17,3 +17,11 @@ Feature: CRUD тесты для Milestones (с параметризацией)
       Then message milestone "Successfully added the new milestone." is displayed
 
     Scenario: Update milestone
+      Given Update milestone page is opened
+      When update name milestone "Update_SEA_Milestone", references milestone "Update_SEA_References", description milestone "Update_SEA_Description"
+      Then message update milestone "Successfully updated the milestone." is displayed
+
+    Scenario: Delete milestone
+      Given Milestone page is opened
+      When delete milestone
+      Then message delete milestone "Successfully deleted the milestone." is displayed
