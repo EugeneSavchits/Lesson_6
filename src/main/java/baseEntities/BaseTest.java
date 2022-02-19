@@ -6,7 +6,7 @@ import io.qameta.allure.selenide.AllureSelenide;
 import org.testng.annotations.BeforeSuite;
 
 public class BaseTest {
-    String url = "https://qa1505.testrail.io";
+    String url = "https://qa1507.testrail.io";
     public String username = "atrostyanko+0401@gmail.com";
     public String password = "QqtRK9elseEfAk6ilYcJ";
 
