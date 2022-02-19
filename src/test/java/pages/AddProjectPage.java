@@ -15,6 +15,7 @@ public class AddProjectPage {
     private static By typeRadioButtonSelector = By.xpath("//*[@name = 'suite_mode' and @value='1']");
     private final By isCompletedSelector = By.id("is_completed");
     private final By addProjectButton = By.id("accept");
+    private final By messageProjectAdded = By.xpath("//*[@class = 'message message-success']");
 
     public SelenideElement getNameProjectField() {
         return $(nameProjectSelector);
@@ -32,6 +33,7 @@ public class AddProjectPage {
     public SelenideElement getAddProjectButton() {
         return $(addProjectButton);
     }
+    public SelenideElement getMessageProjectAdded() {return $(messageProjectAdded);}
 
     public void addProject (Project project){
     getNameProjectField().val(project.getName());
