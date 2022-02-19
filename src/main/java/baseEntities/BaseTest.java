@@ -2,12 +2,12 @@ package baseEntities;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
-import io.cucumber.java.Before;
 import io.qameta.allure.selenide.AllureSelenide;
+import org.testng.annotations.BeforeSuite;
 
 public class BaseTest {
 
-    @Before
+    @BeforeSuite
     public void setup() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
 

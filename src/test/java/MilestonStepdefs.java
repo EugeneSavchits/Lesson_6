@@ -13,6 +13,7 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.open;
 
 public class MilestonStepdefs extends BaseTest {
+
     Project addProject;
     AddProjectPage addProjectPage;
 
