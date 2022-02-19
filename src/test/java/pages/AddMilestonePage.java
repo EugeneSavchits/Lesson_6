@@ -12,12 +12,14 @@ public class AddMilestonePage {
     private final By descriptionSelector = By.id("description_display");
     private final By isShowCompletedSelector = By.id("is_completed");
     private final By addMilestoneButton = By.id("accept");
+    private final By messageMilestoneAdded = By.xpath("//*[@class = 'message message-success']");
 
     public SelenideElement getNameMilestoneField(){return $(nameMilestoneSelector);}
     public SelenideElement getReferencesField(){return $(referencesSelector);}
     public SelenideElement getDescriptionField(){return $(descriptionSelector);}
     public SelenideElement getIsShowCompletedField(){return $(isShowCompletedSelector);}
     public SelenideElement getAddMilestoneButton(){return $(addMilestoneButton);}
+    public SelenideElement getMessageMilestoneAdded() {return $(messageMilestoneAdded);}
 
     public void addMilestone(Milestone milestone){
         getNameMilestoneField().val(milestone.getName());
