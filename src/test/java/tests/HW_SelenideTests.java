@@ -1,6 +1,7 @@
 package tests;
 
 import baseEntities.BaseTest;
+import baseEntities.ReadProperties;
 import models.Milestone;
 import models.Project;
 import models.TestCase;
@@ -30,9 +31,9 @@ public class HW_SelenideTests extends BaseTest {
         open("/");
 
         LoginPage loginPage = new LoginPage();
-        loginPage.getUsernameField().setValue(username);
+        loginPage.getUsernameField().setValue(ReadProperties.getUsername());
 
-        loginPage.getPasswordField().val(password);
+        loginPage.getPasswordField().val(ReadProperties.getPassword());
         loginPage.getLoginButton().click();
 
         $(".page_title").shouldBe(visible).shouldHave(text("All Projects"));

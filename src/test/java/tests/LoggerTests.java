@@ -1,3 +1,4 @@
+/*
 package tests;
 
 import org.apache.logging.log4j.LogManager;
@@ -32,3 +33,4 @@ public class LoggerTests {
         logger.trace("login test is finished...");
     }
 }
+*/

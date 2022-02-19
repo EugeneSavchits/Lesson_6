@@ -6,12 +6,9 @@ import io.qameta.allure.selenide.AllureSelenide;
 import org.testng.annotations.BeforeSuite;
 
 public class BaseTest {
-    String url = "https://qa1507.testrail.io";
-    public String username = "atrostyanko+0401@gmail.com";
-    public String password = "QqtRK9elseEfAk6ilYcJ";
 
     @BeforeSuite
-    public void setupAllureReports() {
+    public void setup() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
 
        SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
@@ -21,8 +18,8 @@ public class BaseTest {
 
         org.apache.log4j.BasicConfigurator.configure();
 
-        Configuration.baseUrl = url;
-        Configuration.browser = "chrome";
+        Configuration.baseUrl = ReadProperties.getUrl();
+        Configuration.browser = ReadProperties.getBrowserName();
         Configuration.startMaximized = true;
 
     }

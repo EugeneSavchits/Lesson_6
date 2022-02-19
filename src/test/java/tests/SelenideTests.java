@@ -1,3 +1,4 @@
+/*
 package tests;
 
 import com.codeborne.selenide.Configuration;
@@ -189,3 +190,4 @@ public class SelenideTests {
                 .shouldHave(exactText("This is the description for the project1"));
     }
 }
+*/
