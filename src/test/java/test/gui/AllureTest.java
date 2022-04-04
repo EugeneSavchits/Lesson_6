@@ -8,7 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class AllureTest {
-
+    //scscss
     @Test(description = "Human-readable test name")
     public void testName() {
         Assert.assertTrue(true);
